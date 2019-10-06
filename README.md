@@ -1,2 +1,0 @@
-# WhereToEat
-Created with CodeSandbox

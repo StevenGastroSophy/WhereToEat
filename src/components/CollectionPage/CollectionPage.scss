@@ -1,0 +1,270 @@
+$componentName: "coverFlow";
+$scopeWidth: 100vw;
+$scopeHeight: (800/9) * 1vw;
+$itemWidth: (100/3) * 1vw;
+$itemHeight: (350/9) * 1vw;
+$leftPaddingNum: ($scopeWidth - $itemWidth)/ (2 * $itemWidth);
+$infoItemWidth: (4/9)*$scopeWidth;
+$infoItemHeight: (1/12)*100vh;
+
+@mixin collectionColors($name, $color1, $color2, $color3) {
+  .wrapper--#{$name} {
+    .#{$componentName}--collectionPage {
+
+      .#{$componentName}__box {
+        background-color: $color1;
+    
+        .#{$componentName}__items {
+    
+          .#{$componentName}__item {
+            border-color: $color2;
+            background-color: $color2;
+            &::before {
+              background-color: rgba( $color2, .5 );
+            }
+            &--selected {
+              border-color: $color3;
+              &::before {
+                background-color: rgba( $color3, .7 );
+              }
+              &::after {
+                background-color: rgba( $color2, .7 );
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .info {
+      background-color: $color2;
+      background-image: 
+        linear-gradient(45deg, 
+          rgba( $color1, .7 ) 25%, 
+          transparent 25%, 
+          transparent 75%, 
+          rgba( $color1, .7 ) 75%, 
+          rgba( $color1, .7 )),
+        linear-gradient(-45deg, 
+          rgba( $color1, .7 ) 25%, 
+          transparent 25%, 
+          transparent 75%, 
+          rgba( $color1, .7 ) 75%, 
+          rgba( $color1, .7 ));
+      .info__resName {
+        background-color: $color1;
+        color: $color2;
+      }
+    
+      .info__details {
+        background-color: $color3;
+        color: $color2;
+        &::before {
+          border-color: $color2;
+          
+        }
+        &::after {
+          background: $color2;
+        }
+      }
+      .info__location {
+        background-color: $color1;
+        color: $color2;
+      }
+      .info__nearby {
+        background-color: $color1;
+        color: $color2;
+        &::before {
+          color: $color1;
+          background-color: $color2;
+        }
+        &::after {
+          background-color: $color1;
+        }
+      }
+    }
+  }
+}
+
+@include collectionColors("colorBWR", #000000, #ffffff, #ff0000);
+@include collectionColors("colorBWY", #191970, #ffffff, #feb330);
+
+.#{$componentName}--collectionPage {
+  width: $scopeWidth;
+  height: $scopeHeight;
+
+  .#{$componentName}__box {
+    padding-left: calc(#{$leftPaddingNum}*#{$itemWidth});
+    padding-right: calc(
+      #{$scopeWidth} - (#{$leftPaddingNum} + 1) *#{$itemWidth}
+    );
+    padding-bottom: 3px;
+
+    .#{$componentName}__items {
+      align-items: center;
+
+      .#{$componentName}__item {
+        width: $itemWidth;
+        height: $itemHeight;
+        border-width: 0.1rem;
+        border-style: solid;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+        &--selected {
+          border-width: 0.1rem;
+          border-style: outset;
+          &::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation-name: flickering;
+            animation-duration: 1.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-direction: normal;
+            transform-origin: bottom;
+            z-index: -1;
+          }
+          &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation-name: flickering;
+            animation-duration: 1.2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            animation-direction: normal;
+            transform-origin: top;
+            z-index: -1;
+          }
+        }
+      }
+    }
+  }
+}
+
+.info {
+  //padding-bottom: 10vh;
+  flex-grow: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-size: 60px 60px;
+  .info__itemWrapper {
+    position: relative;
+    width: 50%;
+  }
+  .info__resName {
+    position: absolute;
+    top: calc(50% - #{(1/2)*$infoItemHeight});
+    left: calc(50% - #{(1/2)*$infoItemWidth});
+    width: $infoItemWidth;
+    height: $infoItemHeight;
+    line-height: $infoItemHeight;
+    font-family: Microsoft JhengHei, sans-serif;
+    text-align: center;
+    transform: skew(10deg, 3deg);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .info__details {
+    position: absolute;
+    top: calc(50% - #{(1/2)*$infoItemHeight});
+    left: calc(50% - #{(1/2)*$infoItemWidth});
+    width: $infoItemWidth;
+    height: $infoItemHeight;
+    line-height: (7/6)*$infoItemHeight;
+    font-size: 6vw;
+    letter-spacing: 0.04vw;
+    text-indent: 0.4vw;
+    text-align: center;
+    -webkit-clip-path: polygon(0 31%, 100% 0%, 100% 89%, 0 100%);
+    clip-path: polygon(0 31%, 100% 0%, 100% 89%, 0 100%);
+    overflow: visible;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      width: 3.2vw;
+      box-sizing: content-box;
+      height: 3.2vw;
+      border-width: 0.8vw;
+      border-style: solid;
+      border-radius: 2.8vw;
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: calc(35% + (1 + 0.7)*(2.8vw + (0.8vw*2))/2);
+      left: calc(10% + (1 + 0.7)*(2.8vw + (0.8vw*2))/2);
+      border-width: 0;
+      width: 3.2vw;
+      height: 0.8vw;
+      transform-origin: left;
+      transform: rotate(45deg);
+    }
+  }
+  .info__location {
+    position: absolute;
+    top: calc(50% - #{(1/2)*$infoItemHeight});
+    left: calc(50% - #{(3/4)*(1/2)*$infoItemWidth});
+    width: (3/4)*$infoItemWidth;
+    height: $infoItemHeight;
+    line-height: $infoItemHeight;
+    text-align: center;
+    transform: skew(-20deg, -5deg);
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 4vw;
+  }
+  .info__nearby {
+    position: absolute;
+    top: calc(50% - #{(1/2)*$infoItemHeight});
+    left: calc(50% - #{(1/2)*$infoItemWidth});
+    width: $infoItemWidth;
+    height: $infoItemHeight;
+    line-height: $infoItemHeight;
+    text-align: center; 
+    transform: skew(10deg, 3deg);
+    overflow: visible;
+    font-size: 4.5vw;
+    &::before {
+      content: "近";
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 7.5vw;
+      font-weight: bold;
+      text-align: center;
+      width: (3/16)*$infoItemWidth;
+      height: (3/4)*$infoItemHeight;
+      line-height: (3/4)*$infoItemHeight;
+      transform: translate(-45%, -40%) skew(-20deg, -6deg);
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: (3/16)*$infoItemWidth;
+      height: (3/4)*$infoItemHeight;
+      transform: translate(-45%, -40%) skew(-25deg, -3deg) scale(1.5);
+      z-index: -1;
+    }
+  }
+}

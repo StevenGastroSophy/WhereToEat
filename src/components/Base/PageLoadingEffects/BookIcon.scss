@@ -1,0 +1,76 @@
+/* 4:3 */
+$bookWidth: 36vw;
+$bookHeight: 27vw;
+
+$progressWidth: 80vw;
+$progressHeight: 20vw;
+
+.book {
+  position: absolute;
+  top: calc(50% - (#{$bookHeight/2 + (1/15)*$bookWidth}));
+  left: calc(50% - (#{$bookWidth/2 + (1/15)*$bookWidth}));
+  border-width: (1/15)*$bookWidth;
+  border-style: solid;
+  border-color: transparent;
+  width: $bookWidth;
+  height: $bookHeight;
+  perspective: (5/2)*$bookWidth;
+  box-sizing: border-box;
+  & .page {
+    display: block;
+    width: (1/2)*$bookWidth;
+    height: $bookHeight;
+    border-color: transparent;
+    border-style: solid;
+    border-width: (1/15)*$bookWidth (1/15)*$bookWidth (1/15)*$bookWidth (1/60)*$bookWidth;
+    margin: 0;
+    position: absolute;
+    right: -(1/15)*$bookWidth;
+    top: -(1/15)*$bookWidth;
+    overflow: hidden;
+    background: darken(transparent,40%);
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    box-sizing: border-box;
+    &:nth-child(1) {
+      animation: pageTurn 1.2s cubic-bezier(0, .39, 1, .68) 1.6s infinite;
+    }
+    
+    &:nth-child(2) {
+      animation: pageTurn 1.2s cubic-bezier(0, .39, 1, .68) 1.45s infinite;
+    }
+    
+    &:nth-child(3) {
+      animation: pageTurn 1.2s cubic-bezier(0, .39, 1, .68) 1.2s infinite;
+    }
+  }
+}
+
+/* Page turn */
+
+@keyframes pageTurn {
+  0% {
+    transform: rotateY( 0deg);
+  }
+  20% {
+    background: transparent;
+  }
+  40% {
+    background: darken(transparent,20%);
+    transform: rotateY( -180deg);
+  }
+  100% {
+    background: darken(transparent,20%);
+    transform: rotateY( -180deg);
+  }
+}
+
+.progress {
+  position: absolute;
+  top: calc(50% + (#{$bookHeight/2 + (1/15)*$bookWidth}) + 2vh);
+  left: calc(50% - (#{(1/2)*$progressWidth}));
+  width: $progressWidth;
+  height: $progressHeight;
+  font-size: 5vw;
+  text-align: center;
+}
